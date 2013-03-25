@@ -56,6 +56,7 @@ class Example.Animal
   # @param [Object] options the moving options
   # @option options [String] direction the {#move} direction
   # @option options [Number] speed the speed in mph
+  # @emits moved the animal has moved
   # @see .enterArk
   #
   move: (options = {}) ->

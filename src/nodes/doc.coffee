@@ -146,6 +146,17 @@ module.exports = class Doc extends Node
           name: option[2]
           desc: Markdown.convert(option[4] || '', true)
 
+      else if emit = /^@emits\s+(.+?)\s(.+)/i.exec line
+        @emitted ?= []
+        @emitted.push
+          name: emit[1]
+          desc: Markdown.convert(emit[2], true)
+
+      else if emit = /^@emits\s+(.+?)/i.exec line
+        @emitted ?= []
+        @emitted.push
+          name: emit[1]
+
       else if see = /^@see\s+([^\s]+)(?:\s+(.+))?/i.exec line
         @see or= []
         @see.push
@@ -229,6 +240,7 @@ module.exports = class Doc extends Node
             summary: doc.summary
             params: doc.params
             options: doc.paramsOptions
+            emits: doc.emitted
             returnValue: doc.returnValue
 
       else if method = /^@method\s+(.+)/i.exec line
@@ -256,6 +268,7 @@ module.exports = class Doc extends Node
             version: doc.version
             since: doc.since
             see: doc.see
+            emits: doc.emitted
             returnValue: doc.returnValue
             notes: doc.notes
             todos: doc.todos
@@ -297,6 +310,7 @@ module.exports = class Doc extends Node
         summary: @summary
         params: @params
         options: @paramsOptions
+        emits: doc.emitted
         see: @see
         returnValue: @returnValue
         throwValue: @throwValue
